@@ -1,22 +1,56 @@
 <template>
   <div id="app">
-    https://laraweb.net/surrounding/4467/
     <p>{{ message }}</p>
     <p>{{ count }}</p>
     
-    <button v-on:click="messageChange('PHPのフレームワークといえばLaravel！')">「PHP」が好き</button>
-    <button v-on:click="messageChange('JavaScriptのライブラリといえばVue.js！')">「JavaScript」が好き</button>
+    <button v-on:click="messageChange('男')">男</button>
+    <button v-on:click="messageChange('女')">女</button>
+    <button v-on:click="messageChange('？？？')">どちらでもない</button>
+    </br></br>
+    <button v-on:click="countChange(1)">（不正）カウントを追加</button>
+    </br></br>
+    <div style="width: 100%; height:2px; background-color: black;"></div>
     </br>
-    <button v-on:click="countChange(1)">カウントを追加</button>
+    <input v-model="store.message" name="message" placeholder="商品名をここに入力">
+    <input v-model="store.value" type="number" name="value" value=1000 placeholder=1000 step=100 max=10000 min=100 style="width: 80px">
+    <button v-on:click="arrivalProduct(store.message,store.value)">登録</button>
+    </br></br>
+    <button v-on:click="resetProduct()">商品すべて破棄</button>
+    <ul>
+      <li v-for="item in store" style="display: inherit; text-align:left;">
+        {{ item.message }}
+        {{ item.value }}円
+      </li>
+    </ul>
+    </br></br>
+    <div style="width: 100%; height:2px; background-color: black;"></div>
+    </br>
+
   </div>
 </template>
+
 <script>
+
 export default {
   el: "#app",
   data() {
     return {
-       message: "好きな言語は？",
+       message: "君は女の子かな？それとも男の子かな？",
        count: 0,
+       store: [
+         {
+           message: "高級じゃない腕時計",
+           value: 900
+         },
+         {
+           message: "スクラップ（鉄くず）",
+           value: 1700
+         },
+         {
+           message: "期限切れのチケット",
+           value: 10
+         },
+       ],
     };
   },
   methods: {
@@ -31,6 +65,16 @@ export default {
     },
     countChange: function(add) {
       this.count += add;
+    },
+    arrivalProduct: function(message,value) {
+      var product = {};
+      
+      product['message'] = message;
+      product['value'] = value;
+      this.store.push(product);
+    },
+    resetProduct: function() {
+      this.store = [];
     }
   }
 };
